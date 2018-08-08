@@ -1,7 +1,9 @@
 <template>
     <div id="app" v-on:touchstart="bodyTouchStart" v-on:touchmove="bodyTouchMove" v-on:touchend="bodyTouchEnd">
         <transition :name="direction">
-            <router-view class="appView"></router-view>
+            <keep-alive include="home">
+                <router-view class="appView"></router-view>
+            </keep-alive>
         </transition>
     </div>
 </template>
@@ -17,15 +19,21 @@ export default {
     }),
     watch: {
         $route(to, from) {
-            const toDepth = to.path.split("/").length;
-            const fromDepth = from.path.split("/").length;
-            this.direction = toDepth < fromDepth ? "slide-right" : "slide-left";
+            if (from.name == "login") {
+                this.direction = "slide-left";
+            } else if (to.name == "home") {
+                this.direction = "slide-right";
+            } else {
+                const toDepth = to.path.split("/").length;
+                const fromDepth = from.path.split("/").length;
+                this.direction = toDepth > fromDepth ? "slide-left" : "slide-right";
+            }
         }
     },
     methods: {
         bodyTouchStart: function(event) {
             this.backBtn = document.getElementById("navback");
-            if (this.backBtn) {
+            if (global.isIOS && this.backBtn) {
                 var touch = event.targetTouches[0];
                 this.touchStartPoint = touch.pageX;
                 this.distance = 0;
@@ -33,19 +41,19 @@ export default {
             }
         },
         bodyTouchMove: function(event) {
-            if (this.backBtn) {
+            if (global.isIOS && this.backBtn && this.touchStartPoint < 100) {
                 if (event.targetTouches.length > 1) {
                     return;
                 }
                 this.distance = event.targetTouches[0].pageX - this.touchStartPoint;
                 if (this.distance > 0) {
-
+                    //手势右滑时，不立即改变路由，在页面上做出响应
                 }
             }
         },
         bodyTouchEnd: function(event) {
-            if (this.backBtn) {
-                if (this.distance > 50) {
+            if (global.isIOS && this.backBtn && this.touchStartPoint < 100) {
+                if (this.distance > 70) {
                     this.$router.back();
                 }
                 this.touching = false;
