@@ -8,19 +8,39 @@
 <script>
 export default {
     name: 'login',
-    data(){
-    	return{
-    		username:"",
-    		password:""
-    	}
+    data() {
+        return {
+            username: "",
+            password: ""
+        }
     },
-    methods:{
-    	login(){
-    		this.$router.push("home")
-    	}
+    methods: {
+        login() {
+            if (!this.username) {
+                this.$toast({
+                    message: '请输入用户名',
+                    position: 'bottom',
+                    duration: 1200,
+                    className: 'warning'
+                });
+                return;
+            }else if(!this.password){
+                this.$toast({
+                    message: '请输入密码',
+                    position: 'bottom',
+                    duration: 1200,
+                    className: 'warning'
+                });
+                return;
+            }
+            this.$indicator.open();
+            setTimeout(()=>{
+                this.$indicator.close();
+                this.$router.push("home")
+            },600)
+        }
     }
 }
 </script>
 <style scoped>
-
 </style>

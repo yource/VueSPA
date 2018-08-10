@@ -1,28 +1,28 @@
 (function(window) {
   /**
-    * global.setCookie(key,value,time) 设置cookie
-    * global.setStorage(key,value) 设置本地存储
-    * global.md5(str) MD5加密
-    * global.isIOS 鉴别操作系统
+    * $tool.setCookie(key,value,time) 设置cookie
+    * $tool.setStorage(key,value) 设置本地存储
+    * $tool.md5(str) MD5加密
+    * $tool.isIOS 鉴别操作系统
     **/
-    var global = {};
+    var $tool = {};
 
     if(typeof plus==="undefined" || !plus.os){
-      global.isIOS = window.navigator.appVersion.indexOf("iPhone")>-1;
+      $tool.isIOS = window.navigator.appVersion.indexOf("iPhone")>-1;
     }else{
-      global.isIOS = plus.os.name=="iOS"
+      $tool.isIOS = plus.os.name=="iOS"
     }
 
     /****************  cookie和localstorage  ****************/
     // 是否支持localStorage
     if (!window.localStorage) {
-        global.supportLocalStorage = false;
+        $tool.supportLocalStorage = false;
     } else {
-        global.supportLocalStorage = true;
+        $tool.supportLocalStorage = true;
     }
 
     // time为超时时间（单位毫秒），非必填
-    global.setStorage = function(key, value, time) {
+    $tool.setStorage = function(key, value, time) {
         if (this.supportLocalStorage) {
             if (typeof key != "string") {
                 console.log("*STORAGE ERROR* key必须是字符串");
@@ -44,12 +44,12 @@
             }
             localStorage.setItem(key, JSON.stringify(setValue));
         } else {
-            global.setCookie(key, value, time)
+            $tool.setCookie(key, value, time)
         }
     };
 
     // 不存在的值会返回null
-    global.getStorage = function(key) {
+    $tool.getStorage = function(key) {
         if (this.supportLocalStorage) {
             var getValue = JSON.parse(localStorage.getItem(key));
             if (!getValue) {
@@ -62,29 +62,29 @@
                 return JSON.parse(getValue.value)
             }
         } else {
-            global.getCookie(key)
+            $tool.getCookie(key)
         }
     };
 
     // 移除某个值
-    global.removeStorage = function(key) {
+    $tool.removeStorage = function(key) {
         if (this.supportLocalStorage) {
             localStorage.removeItem(key);
         } else {
-            global.removeCookie(key)
+            $tool.removeCookie(key)
         }
     };
     // 清空存储
-    global.clearStorage = function() {
+    $tool.clearStorage = function() {
         if (this.supportLocalStorage) {
             localStorage.clear();
         } else {
-            global.clearCookie();
+            $tool.clearCookie();
         }
     };
 
     /**** cookie方法 ****/
-    global.setCookie = function(key, value, time) {
+    $tool.setCookie = function(key, value, time) {
         if (typeof key != "string") {
             console.log("*STORAGE ERROR* key必须是字符串");
             return;
@@ -98,7 +98,7 @@
             document.cookie = key + "=" + value + "; expires=" + d.toGMTString();
         }
     };
-    global.getCookie = function(key) {
+    $tool.getCookie = function(key) {
         var cookies = document.cookie.split(";")
         var cookieValue;
         for (var i = 0; i < cookies.length; i++) {
@@ -109,10 +109,10 @@
         }
         return cookieValue;
     };
-    global.removeCookie = function(key) {
+    $tool.removeCookie = function(key) {
         document.cookie = key + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     };
-    global.clearCookie = function() {
+    $tool.clearCookie = function() {
         var cookies = document.cookie.split(";")
         for (var i = 0; i < cookies.length; i++) {
             document.cookie = cookies[i].split("=")[0] + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
@@ -120,7 +120,7 @@
     };
 
     /****************  md5加密  ****************/
-    global.md5 = function(s) { return binl2hex(core_md5(str2binl(s), s.length * chrsz)); }
+    $tool.md5 = function(s) { return binl2hex(core_md5(str2binl(s), s.length * chrsz)); }
 
     var hexcase = 0;
     var b64pad = "";
@@ -241,5 +241,5 @@
         return (msw << 16) | (lsw & 0xFFFF);
     }
 
-    window.global = global;
+    window.$tool = $tool;
 })(window)

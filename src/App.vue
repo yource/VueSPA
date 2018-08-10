@@ -33,7 +33,7 @@ export default {
     methods: {
         bodyTouchStart: function(event) {
             this.backBtn = document.getElementById("navback");
-            if (global.isIOS && this.backBtn) {
+            if ($tool.isIOS && this.backBtn) {
                 var touch = event.targetTouches[0];
                 this.touchStartPoint = touch.pageX;
                 this.distance = 0;
@@ -41,7 +41,7 @@ export default {
             }
         },
         bodyTouchMove: function(event) {
-            if (global.isIOS && this.backBtn && this.touchStartPoint < 100) {
+            if ($tool.isIOS && this.backBtn && this.touchStartPoint < 100) {
                 if (event.targetTouches.length > 1) {
                     return;
                 }
@@ -52,7 +52,7 @@ export default {
             }
         },
         bodyTouchEnd: function(event) {
-            if (global.isIOS && this.backBtn && this.touchStartPoint < 100) {
+            if ($tool.isIOS && this.backBtn && this.touchStartPoint < 100) {
                 if (this.distance > 70) {
                     this.$router.back();
                 }
@@ -77,7 +77,7 @@ export default {
     width: 100%;
     background: #fff;
     min-height: 100vh;
-    transition: transform 0.2s ease-out;
+    transition: transform 0.16s ease-out;
 }
 
 .slide-left-enter {

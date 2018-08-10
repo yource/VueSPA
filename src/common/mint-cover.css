@@ -1,0 +1,28 @@
+.mint-toast{
+    background: #fff;
+    box-shadow: 0 1px 2px #ccc;
+    color: #3b3c40;
+    border-radius: 13px;
+}
+.mint-toast.default{
+    padding: 5px 20px !important;
+}
+.mint-toast.warning{
+    padding: 5px 20px !important;
+    background: #ffe30c;
+}
+.mint-toast.danger{
+    padding: 5px 20px !important;
+    background: #ef4f4f;
+    color: #fff;
+}
+.mint-indicator-wrapper{
+    background: #fff;
+    color: #ff7700;
+    box-shadow: 0 1px 2px #ccc;
+}
+.mint-spinner-snake{
+    border-top-color:#ff7b07 !important;
+    border-left-color:#ff7b07 !important;
+    border-bottom-color:#ff7b07 !important;
+}
