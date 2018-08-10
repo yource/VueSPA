@@ -1,5 +1,5 @@
 <template>
-    <div id="page1">
+    <div id="homePage" class="hoemPage">
     	<div id="navback">back</div>
         <router-link to="/page1/page2">page2</router-link>
         <p>page1page1page1page1page1page1page1page1page1</p>
@@ -23,7 +23,7 @@
 </template>
 <script>
 export default {
-    name: 'page1'
+    name: 'home'
 }
 </script>
 <style scoped>
