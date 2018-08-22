@@ -1,50 +1,52 @@
 <template>
-    <div id="homePage" class="hoemPage">
-    	<div id="navback">back</div>
-        <router-link to="/page1/page2">page2</router-link>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <p>page1page1page1page1page1page1page1page1page1</p>
-        <div class="btn">我的</div>
-        <div class="btn2">我的</div><div class="btn2">123</div><div class="btn2">aabbrgf</div>
+    <div id="homePage" class="homePage">
+        <keep-alive>
+            <router-view class="homeView"></router-view>
+        </keep-alive>
+        <mt-tabbar v-model="activeTab" :fixed="true">
+            <mt-tab-item id="home1">
+                <img slot="icon" v-show="activeTab!='home1'" src="../../assets/icon/book.png"> 
+                <img slot="icon" v-show="activeTab=='home1'" src="../../assets/icon/book-active.png"> 
+                首页
+            </mt-tab-item>
+            <mt-tab-item id="home2">
+                <img slot="icon" v-show="activeTab!='home2'" src="../../assets/icon/music.png"> 
+                <img slot="icon" v-show="activeTab=='home2'" src="../../assets/icon/music-active.png"> 
+                推荐
+            </mt-tab-item>
+            <mt-tab-item id="home3">
+                <img slot="icon" v-show="activeTab!='home3'" src="../../assets/icon/mv.png"> 
+                <img slot="icon" v-show="activeTab=='home3'" src="../../assets/icon/mv-active.png"> 
+                发现
+            </mt-tab-item>
+            <mt-tab-item id="home4">
+                <img slot="icon" v-show="activeTab!='home4'" src="../../assets/icon/user.png"> 
+                <img slot="icon" v-show="activeTab=='home4'" src="../../assets/icon/user-active.png"> 
+                我的
+            </mt-tab-item>
+        </mt-tabbar>
     </div>
 </template>
 <script>
 export default {
-    name: 'home'
+    name: 'home',
+    data() {
+        return {
+            activeTab: "home1"
+        }
+    },
+    watch:{
+        activeTab(newtab){
+            this.$route.meta.scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+            this.$router.replace("/home/"+newtab);
+        }
+    }
+
 }
 </script>
 <style scoped>
-#page1 {
+.homePage {
     background: #fff;
-}
-.btn{
-	height: 16px;
-	font-size: 16px;
-	line-height: 16px;
-	border: 1px solid #ccc;
-	width:80px;
-	text-align: center;
-	margin-top: 50px;
-}
-.btn2{
-	font-size: 12px;
-	padding: 2px;
-	margin-top: 50px;
-	border: 1px solid #ccc;
-	float: left;
-	margin-left: 50px;
+    min-height: 100vh;
 }
 </style>

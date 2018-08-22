@@ -8,25 +8,26 @@
     </div>
 </template>
 <script>
+var swidth = document.documentElement.clientWidth;
 export default {
     name: 'app',
     data: () => ({
-        direction: "slide-right",
+        direction: "slide-left",
+        touchLeft: swidth*2/5,
         touchStartPoint: 0,
         distance: 0,
-        touching: false,
         backBtn: null
     }),
     watch: {
         $route(to, from) {
-            if (from.name == "login") {
+            if (from.name == "login" || from.path.indexOf("home") > -1) {
                 this.direction = "slide-left";
-            } else if (to.name == "home") {
+            } else if (to.path.indexOf("home") > -1) {
                 this.direction = "slide-right";
             } else {
                 const toDepth = to.path.split("/").length;
                 const fromDepth = from.path.split("/").length;
-                this.direction = toDepth > fromDepth ? "slide-left" : "slide-right";
+                this.direction = toDepth < fromDepth ? "slide-right" : "slide-left";
             }
         }
     },
@@ -37,28 +38,31 @@ export default {
                 var touch = event.targetTouches[0];
                 this.touchStartPoint = touch.pageX;
                 this.distance = 0;
-                this.touching = true;
             }
         },
         bodyTouchMove: function(event) {
-            if ($tool.isIOS && this.backBtn && this.touchStartPoint < 100) {
+            if ($tool.isIOS && this.backBtn && this.touchStartPoint < touchLeft) {
                 if (event.targetTouches.length > 1) {
                     return;
                 }
                 this.distance = event.targetTouches[0].pageX - this.touchStartPoint;
-                if (this.distance > 0) {
-                    //手势右滑时，不立即改变路由，在页面上做出响应
+                if (this.distance > 0 && this.distance < 100) {
+                    this.backBtn.style.backgroundPosition = ((this.distance - 100) / 100) * 50 + "px 0";
+                } else if (this.distance >= 100) {
+                    this.backBtn.style.backgroundPosition = "0 0";
+                } else {
+                    this.backBtn.style.backgroundPosition = "-50px 0";
                 }
             }
         },
         bodyTouchEnd: function(event) {
-            if ($tool.isIOS && this.backBtn && this.touchStartPoint < 100) {
-                if (this.distance > 70) {
+            if ($tool.isIOS && this.backBtn && this.touchStartPoint < touchLeft) {
+                this.touchStartPoint = 0;
+                this.backBtn.style.backgroundPosition = "-50px 0";
+                if (this.distance > 100) {
+                    this.distance = 0;
                     this.$router.back();
                 }
-                this.touching = false;
-                this.distance = 0;
-                this.touchStartPoint = 0;
             }
         }
     }
@@ -77,7 +81,7 @@ export default {
     width: 100%;
     background: #fff;
     min-height: 100vh;
-    transition: transform 0.16s ease-out;
+    transition: transform 0.22s ease-out;
 }
 
 .slide-left-enter {

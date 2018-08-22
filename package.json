@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "prod" :"webpack --progress --colors",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -16,7 +17,14 @@
     "@vue/cli-plugin-babel": "^3.0.0-rc.10",
     "@vue/cli-plugin-eslint": "^3.0.0-rc.10",
     "@vue/cli-service": "^3.0.0-rc.10",
-    "vue-template-compiler": "^2.5.16"
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-latest": "^6.24.1",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
   },
   "eslintConfig": {
     "root": true,
