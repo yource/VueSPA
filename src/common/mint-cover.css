@@ -83,8 +83,44 @@
     line-height: 26px;
 }
 
+.mint-tabbar.is-fixed{
+    background-color:#fff;
+    background-image:none;
+}
+.mint-tabbar.is-fixed::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 0 20px #dbdde0;
+}
+.mint-tabbar.is-fixed > .mint-tab-item.is-selected{
+    background-color:#fff;
+}
+.mui-bar{
+    background-color: #fff;
+}
+.mui-bar-nav{
+    box-shadow: 0 0 3px #dbdde0;
+}
+
+
+
 #navback{
     background-image: url("../assets/icon/navbackbg.png");
     background-position: -50px 0;
     background-repeat:no-repeat;
+}
+.gap{
+    height: 15px;
+    background: #eaeaea;
 }

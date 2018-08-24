@@ -11,6 +11,7 @@ import settingAccount from './components/setting/account.vue'
 import settingNotifications from './components/setting/notifications.vue'
 import settingPrivacy from './components/setting/privacy.vue'
 import settingGeneral from './components/setting/general.vue'
+import message from './components/message/message.vue'
 
 Vue.use(Router)
 
@@ -60,6 +61,9 @@ export default new Router({
     },{
         path:"/setting/general",
         component:settingGeneral
+    },{
+        path:"/message",
+        component:message
     }],
     // meta.scrollTop记录滚动位置
     scrollBehavior(to, from, savedPosition) {
